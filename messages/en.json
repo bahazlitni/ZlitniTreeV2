@@ -1,0 +1,228 @@
+{
+  "Common": {
+    "brand": "Zlitni Tree",
+    "language": "Language",
+    "themeToggle": "Switch color theme",
+    "home": "Home",
+    "back": "Back",
+    "continue": "Continue",
+    "logout": "Log out",
+    "loading": "Loading...",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "languages": {
+      "en": "English",
+      "fr": "French",
+      "ar": "Arabic"
+    },
+    "roles": {
+      "ROOT": "root",
+      "ADMIN": "admin",
+      "MEMBER": "member",
+      "ANON": "guest"
+    }
+  },
+  "Auth": {
+    "email": "Email",
+    "password": "Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "emailPlaceholder": "Enter your email...",
+    "passwordPlaceholder": "Enter your password if required...",
+    "newPasswordPlaceholder": "Enter a new password...",
+    "confirmPasswordPlaceholder": "Confirm the password...",
+    "backToLogin": "Back to login",
+    "validation": {
+      "missingFields": "Email is required.",
+      "weak": "Password must contain at least 8 characters.",
+      "mismatch": "The passwords do not match.",
+      "invalidCredentials": "Invalid email or password.",
+      "passwordRequired": "Password is required for this account.",
+      "startError": "We could not start the login flow. Please try again."
+    },
+    "login": {
+      "title": "Log in",
+      "action": "Next",
+      "loading": "Checking...",
+      "forgot": "Forgot password?",
+      "changePassword": "Change password",
+      "accountHelp": "How to make an account?",
+      "otpSentTo": "We sent an OTP code to {email}.",
+      "signedInTitle": "Log in",
+      "signedInMessage": "You are connected with {email} as {role}."
+    },
+    "forgot": {
+      "title": "Log in",
+      "subtitle": "Enter your email and we will send a secure reset link if the account exists.",
+      "action": "Send link",
+      "loading": "Sending link...",
+      "successTitle": "Check your inbox",
+      "successBody": "If this account exists, a password reset email has been sent.",
+      "error": "We could not send the reset link. Please try again."
+    },
+    "reset": {
+      "title": "Reset password",
+      "subtitle": "Choose a strong password to regain access to your account.",
+      "action": "Reset password",
+      "loading": "Resetting...",
+      "successTitle": "Password reset",
+      "successBody": "Your password has been updated. Please sign in again.",
+      "missingToken": "The reset link is missing a token.",
+      "error": "We could not reset the password. The link may be invalid or expired."
+    },
+    "change": {
+      "title": "Change password",
+      "subtitle": "Update the password for your active session.",
+      "action": "Update password",
+      "loading": "Updating...",
+      "successTitle": "Password updated",
+      "successBody": "For security, your sessions were closed. Please sign in again.",
+      "signedInAs": "Signed in as {email}",
+      "loadingSession": "Loading your session...",
+      "passwordless": "This account uses passwordless login. There is no password to change.",
+      "error": "We could not update the password. Please check your current password."
+    }
+  },
+  "AccountHelp": {
+    "title": "Sign in without creating an account",
+    "login": "Log in",
+    "howTitle": "How the sign-in works",
+    "intro": "You don’t create a password. You sign in with a one-time code (OTP).",
+    "steps": {
+      "one": "Enter your email and press Next.",
+      "two": "Check your inbox for the 6-digit OTP code.",
+      "three": "Enter the code correctly. The app confirms it on the server.",
+      "four": "You are redirected and your role is assigned automatically if your email was pre-approved by admins."
+    },
+    "rolePersistence": "If your email is flagged with a role, you keep that role as long as it stays assigned.",
+    "rolesTitle": "Roles and access",
+    "roles": {
+      "admin": {
+        "label": "Admin",
+        "description": "Can read and write all data."
+      },
+      "member": {
+        "label": "Member",
+        "description": "Can read specific non-public data on top of the public data. Cannot write data."
+      },
+      "anon": {
+        "label": "Anon (no role)",
+        "description": "Can read only public data. Cannot write data."
+      }
+    },
+    "faqTitle": "FAQ",
+    "faq": {
+      "password": {
+        "question": "Do I ever need a password?",
+        "answer": "No. We use passwordless sign-in. Your email + OTP is enough."
+      },
+      "role": {
+        "question": "What if I should have a role but I don’t get it after sign-in?",
+        "answer": "Contact an admin so they can pre-assign your role to your email."
+      }
+    }
+  },
+  "Otp": {
+    "sentTo": "We sent an OTP code to {email}.",
+    "digitLabel": "OTP digit {number}",
+    "verify": "Verify",
+    "verifying": "Verifying...",
+    "resend": "Resend code",
+    "resendIn": "Resend in {seconds}s",
+    "sending": "Sending...",
+    "feedback": {
+      "errorSendingCode": "Something went wrong while sending the code.",
+      "errorVerifyingCode": "Something went wrong during verification.",
+      "codeMismatch": "Invalid code. Please try again.",
+      "codeAlreadySent": "Your OTP code has already been sent.",
+      "tooManyAttempts": "Too many attempts. Please try again later.",
+      "resendInCooldown": "Please wait before requesting another code.",
+      "codeResent": "A new code has been sent.",
+      "codeCorrect": "Code verified successfully."
+    }
+  },
+  "Home": {
+    "title": "Family tree workspace",
+    "subtitle": "The private workspace shell is ready. The next stage will bring in the family tree management views.",
+    "signedInAs": "Signed in as {email}",
+    "security": "Protected by the login flow",
+    "searchPlaceholder": "Search family members...",
+    "searchLoginRequired": "Sign in to search the tree",
+    "searching": "Searching...",
+    "searchError": "Could not search people.",
+    "searchEmpty": "No matching people.",
+    "adminPanel": "Admin panel",
+    "fit": "Fit",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode",
+    "myAccount": "My account",
+    "menu": "Menu",
+    "accountTitle": "My account",
+    "accountDescription": "View your account details and update your password when your login mode allows it.",
+    "role": "Role",
+    "loginMode": "Login mode",
+    "accountId": "User ID",
+    "passwordHelp": "Password changes require your current password and will close your active sessions.",
+    "accountLoginRequired": "Sign in to view your account information.",
+    "guest": "guest",
+    "treeAria": "Family tree viewer",
+    "access": "Access",
+    "signedOut": "Signed out",
+    "birthUnknown": "Birth date unknown",
+    "bornDate": "Born {date}",
+    "bornMonthDay": "Born month {month}, day {day}",
+    "bornMonth": "Born month {month}",
+    "bornDay": "Born day {day}",
+    "treeLoading": "Preparing the tree...",
+    "treeLoadError": "Could not load the tree.",
+    "treeLoginRequired": "Sign in to view the family tree.",
+    "spouse": "Spouse",
+    "spouseUnknown": "No spouse recorded",
+    "paternalLine": "Paternal Lineage",
+    "sonOf": "son of",
+    "daughterOf": "daughter of",
+    "childOf": "child of",
+    "unknown": "Unknown",
+    "gender": "Gender",
+    "genderMale": "Male",
+    "genderFemale": "Female",
+    "firstName": "Firstname",
+    "lastName": "Lastname",
+    "age": "Age",
+    "ageApprox": "~{age}",
+    "birth": "Birth",
+    "death": "Death",
+    "identity": "Identity",
+    "parents": "Parents",
+    "spouses": "Spouses",
+    "children": "Children",
+    "father": "Father",
+    "mother": "Mother",
+    "husband": "Husband",
+    "wife": "Wife",
+    "son": "Son",
+    "daughter": "Daughter",
+    "child": "Child"
+  },
+  "Email": {
+    "loginOtp": {
+      "subject": "Your login OTP code",
+      "text": "Your login OTP code is: {code}",
+      "title": "Login confirmation",
+      "subtitle": "Use this code to complete your login to Zlitni Tree.",
+      "codeLabel": "Your code",
+      "expires": "This code expires in {minutes} minutes.",
+      "footer": "If you did not request this code, you can safely ignore this email."
+    },
+    "passwordReset": {
+      "subject": "Reset your password",
+      "text": "Use this link to reset your password: {url}",
+      "title": "Reset your password",
+      "subtitle": "Use the secure link below to choose a new password for your family tree account.",
+      "action": "Reset password",
+      "expires": "This link expires in {minutes} minutes.",
+      "footer": "If you did not request this reset, you can safely ignore this email."
+    }
+  }
+}

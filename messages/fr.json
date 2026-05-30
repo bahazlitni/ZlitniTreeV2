@@ -1,0 +1,228 @@
+{
+  "Common": {
+    "brand": "Zlitni Tree",
+    "language": "Langue",
+    "themeToggle": "Changer le thème",
+    "home": "Accueil",
+    "back": "Retour",
+    "continue": "Continuer",
+    "logout": "Se déconnecter",
+    "loading": "Chargement...",
+    "showPassword": "Afficher le mot de passe",
+    "hidePassword": "Masquer le mot de passe",
+    "languages": {
+      "en": "Anglais",
+      "fr": "Français",
+      "ar": "Arabe"
+    },
+    "roles": {
+      "ROOT": "racine",
+      "ADMIN": "admin",
+      "MEMBER": "membre",
+      "ANON": "invité"
+    }
+  },
+  "Auth": {
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "emailPlaceholder": "Entrez votre e-mail...",
+    "passwordPlaceholder": "Entrez votre mot de passe si nécessaire...",
+    "newPasswordPlaceholder": "Entrez un nouveau mot de passe...",
+    "confirmPasswordPlaceholder": "Confirmez le mot de passe...",
+    "backToLogin": "Retour à la connexion",
+    "validation": {
+      "missingFields": "L’e-mail est obligatoire.",
+      "weak": "Le mot de passe doit contenir au moins 8 caractères.",
+      "mismatch": "Les mots de passe ne correspondent pas.",
+      "invalidCredentials": "E-mail ou mot de passe invalide.",
+      "passwordRequired": "Le mot de passe est obligatoire pour ce compte.",
+      "startError": "Impossible de démarrer la connexion. Veuillez réessayer."
+    },
+    "login": {
+      "title": "Connexion",
+      "action": "Suivant",
+      "loading": "Vérification...",
+      "forgot": "Mot de passe oublié ?",
+      "changePassword": "Changer le mot de passe",
+      "accountHelp": "Comment créer un compte ?",
+      "otpSentTo": "Nous avons envoyé un code OTP à {email}.",
+      "signedInTitle": "Connexion",
+      "signedInMessage": "Vous êtes connecté avec {email} en tant que {role}."
+    },
+    "forgot": {
+      "title": "Connexion",
+      "subtitle": "Entrez votre e-mail et nous enverrons un lien sécurisé si le compte existe.",
+      "action": "Envoyer le lien",
+      "loading": "Envoi du lien...",
+      "successTitle": "Consultez votre boîte",
+      "successBody": "Si ce compte existe, un e-mail de réinitialisation a été envoyé.",
+      "error": "Impossible d’envoyer le lien. Veuillez réessayer."
+    },
+    "reset": {
+      "title": "Réinitialiser le mot de passe",
+      "subtitle": "Choisissez un mot de passe solide pour récupérer votre accès.",
+      "action": "Réinitialiser",
+      "loading": "Réinitialisation...",
+      "successTitle": "Mot de passe réinitialisé",
+      "successBody": "Votre mot de passe a été modifié. Veuillez vous reconnecter.",
+      "missingToken": "Le lien de réinitialisation ne contient pas de jeton.",
+      "error": "Impossible de réinitialiser le mot de passe. Le lien est peut-être invalide ou expiré."
+    },
+    "change": {
+      "title": "Changer le mot de passe",
+      "subtitle": "Mettez à jour le mot de passe de votre session active.",
+      "action": "Mettre à jour",
+      "loading": "Mise à jour...",
+      "successTitle": "Mot de passe modifié",
+      "successBody": "Par sécurité, vos sessions ont été fermées. Veuillez vous reconnecter.",
+      "signedInAs": "Connecté en tant que {email}",
+      "loadingSession": "Chargement de votre session...",
+      "passwordless": "Ce compte utilise une connexion sans mot de passe. Il n’y a pas de mot de passe à modifier.",
+      "error": "Impossible de modifier le mot de passe. Vérifiez votre mot de passe actuel."
+    }
+  },
+  "AccountHelp": {
+    "title": "Se connecter sans créer de compte",
+    "login": "Connexion",
+    "howTitle": "Comment fonctionne la connexion",
+    "intro": "Vous ne créez pas de mot de passe. Vous vous connectez avec un code à usage unique (OTP).",
+    "steps": {
+      "one": "Entrez votre e-mail et appuyez sur Suivant.",
+      "two": "Consultez votre boîte de réception pour récupérer le code OTP à 6 chiffres.",
+      "three": "Entrez le code correctement. L’application le confirme sur le serveur.",
+      "four": "Vous êtes redirigé et votre rôle est attribué automatiquement si votre e-mail a été pré-approuvé par les admins."
+    },
+    "rolePersistence": "Si votre e-mail est associé à un rôle, vous gardez ce rôle tant qu’il reste attribué.",
+    "rolesTitle": "Rôles et accès",
+    "roles": {
+      "admin": {
+        "label": "Admin",
+        "description": "Peut lire et modifier toutes les données."
+      },
+      "member": {
+        "label": "Membre",
+        "description": "Peut lire certaines données non publiques en plus des données publiques. Ne peut pas modifier les données."
+      },
+      "anon": {
+        "label": "Anon (sans rôle)",
+        "description": "Peut lire uniquement les données publiques. Ne peut pas modifier les données."
+      }
+    },
+    "faqTitle": "FAQ",
+    "faq": {
+      "password": {
+        "question": "Ai-je parfois besoin d’un mot de passe ?",
+        "answer": "Non. Nous utilisons une connexion sans mot de passe. Votre e-mail + OTP suffisent."
+      },
+      "role": {
+        "question": "Que faire si je devrais avoir un rôle mais que je ne l’obtiens pas après connexion ?",
+        "answer": "Contactez un admin afin qu’il puisse pré-attribuer votre rôle à votre e-mail."
+      }
+    }
+  },
+  "Otp": {
+    "sentTo": "Nous avons envoyé un code OTP à {email}.",
+    "digitLabel": "Chiffre OTP {number}",
+    "verify": "Vérifier",
+    "verifying": "Vérification...",
+    "resend": "Renvoyer le code",
+    "resendIn": "Renvoyer dans {seconds}s",
+    "sending": "Envoi...",
+    "feedback": {
+      "errorSendingCode": "Une erreur s’est produite lors de l’envoi du code.",
+      "errorVerifyingCode": "Une erreur s’est produite lors de la vérification.",
+      "codeMismatch": "Code invalide. Veuillez réessayer.",
+      "codeAlreadySent": "Votre code OTP a déjà été envoyé.",
+      "tooManyAttempts": "Trop de tentatives. Veuillez réessayer plus tard.",
+      "resendInCooldown": "Veuillez patienter avant de demander un nouveau code.",
+      "codeResent": "Un nouveau code a été envoyé.",
+      "codeCorrect": "Code vérifié avec succès."
+    }
+  },
+  "Home": {
+    "title": "Espace arbre familial",
+    "subtitle": "La base de l’espace privé est prête. La prochaine étape ajoutera les vues de gestion de l’arbre familial.",
+    "signedInAs": "Connecté en tant que {email}",
+    "security": "Protégé par le flux de connexion",
+    "searchPlaceholder": "Rechercher des membres...",
+    "searchLoginRequired": "Connectez-vous pour rechercher dans l’arbre",
+    "searching": "Recherche...",
+    "searchError": "Impossible de rechercher des personnes.",
+    "searchEmpty": "Aucune personne correspondante.",
+    "adminPanel": "Panneau admin",
+    "fit": "Ajuster",
+    "lightMode": "Mode clair",
+    "darkMode": "Mode sombre",
+    "myAccount": "Mon compte",
+    "menu": "Menu",
+    "accountTitle": "Mon compte",
+    "accountDescription": "Consultez vos informations et modifiez votre mot de passe quand votre mode de connexion le permet.",
+    "role": "Rôle",
+    "loginMode": "Mode de connexion",
+    "accountId": "ID utilisateur",
+    "passwordHelp": "La modification du mot de passe exige le mot de passe actuel et ferme vos sessions actives.",
+    "accountLoginRequired": "Connectez-vous pour voir vos informations de compte.",
+    "guest": "invité",
+    "treeAria": "Vue de l’arbre familial",
+    "access": "Accès",
+    "signedOut": "Déconnecté",
+    "birthUnknown": "Date de naissance inconnue",
+    "bornDate": "Né(e) {date}",
+    "bornMonthDay": "Né(e) mois {month}, jour {day}",
+    "bornMonth": "Né(e) mois {month}",
+    "bornDay": "Né(e) jour {day}",
+    "treeLoading": "Préparation de l'arbre...",
+    "treeLoadError": "Impossible de charger l'arbre.",
+    "treeLoginRequired": "Connectez-vous pour voir l'arbre familial.",
+    "spouse": "Conjoint",
+    "spouseUnknown": "Aucun conjoint enregistré",
+    "paternalLine": "Lignée paternelle",
+    "sonOf": "fils de",
+    "daughterOf": "fille de",
+    "childOf": "enfant de",
+    "unknown": "Inconnu",
+    "gender": "Genre",
+    "genderMale": "Homme",
+    "genderFemale": "Femme",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "age": "Age",
+    "ageApprox": "~{age}",
+    "birth": "Naissance",
+    "death": "Décès",
+    "identity": "Identité",
+    "parents": "Parents",
+    "spouses": "Conjoints",
+    "children": "Enfants",
+    "father": "Père",
+    "mother": "Mère",
+    "husband": "Mari",
+    "wife": "Femme",
+    "son": "Fils",
+    "daughter": "Fille",
+    "child": "Enfant"
+  },
+  "Email": {
+    "loginOtp": {
+      "subject": "Votre code OTP de connexion",
+      "text": "Votre code OTP de connexion est : {code}",
+      "title": "Confirmation de connexion",
+      "subtitle": "Utilisez ce code pour finaliser votre connexion à Zlitni Tree.",
+      "codeLabel": "Votre code",
+      "expires": "Ce code expire dans {minutes} minutes.",
+      "footer": "Si vous n’avez pas demandé ce code, vous pouvez ignorer cet e-mail en toute sécurité."
+    },
+    "passwordReset": {
+      "subject": "Réinitialisation de votre mot de passe",
+      "text": "Utilisez ce lien pour réinitialiser votre mot de passe : {url}",
+      "title": "Réinitialiser votre mot de passe",
+      "subtitle": "Utilisez le lien sécurisé ci-dessous pour choisir un nouveau mot de passe pour votre compte arbre familial.",
+      "action": "Réinitialiser",
+      "expires": "Ce lien expire dans {minutes} minutes.",
+      "footer": "Si vous n’avez pas demandé cette réinitialisation, vous pouvez ignorer cet e-mail en toute sécurité."
+    }
+  }
+}

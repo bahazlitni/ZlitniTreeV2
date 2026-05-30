@@ -1,0 +1,32 @@
+export const PERSON_EXCEL_HEADERS = [
+  "id",
+  "parentMarriageId",
+  "firstNameArabic",
+  "middleNameArabic",
+  "lastNameArabic",
+  "firstName",
+  "middleName",
+  "lastName",
+  "isMale",
+  "isAlive",
+  "birthYear",
+  "birthMonth",
+  "birthDay",
+  "birthCity",
+  "birthCountryCode",
+  "deathYear",
+  "deathMonth",
+  "deathDay",
+  "deathCity",
+  "deathCountryCode",
+] as const;
+
+export const MARRIAGE_EXCEL_HEADERS = [
+  "id",
+  "firstPartnerId",
+  "secondPartnerId",
+  "weddingYear",
+  "weddingMonth",
+  "weddingDay",
+  "isDivorced",
+] as const;
