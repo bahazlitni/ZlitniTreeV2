@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { AuthError, requireSession } from "@/features/auth/server/session";
+import { clearRefreshTokenCookie } from "@/lib/api/auth/cookies";
 import { hashPassword, verifyPassword } from "@/lib/api/auth/password";
 import { LoginMode } from "@/lib/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
@@ -18,7 +19,10 @@ export async function POST(req: NextRequest) {
 
     if (!currentPassword || !newPassword) {
       return NextResponse.json(
-        { ok: false, message: "Current password and new password are required." },
+        {
+          ok: false,
+          message: "Current password and new password are required.",
+        },
         { status: 400 },
       );
     }
@@ -48,12 +52,18 @@ export async function POST(req: NextRequest) {
 
     if (!user.passwordHash) {
       return NextResponse.json(
-        { ok: false, message: "This account does not have a current password." },
+        {
+          ok: false,
+          message: "This account does not have a current password.",
+        },
         { status: 400 },
       );
     }
 
-    const validPassword = await verifyPassword(currentPassword, user.passwordHash);
+    const validPassword = await verifyPassword(
+      currentPassword,
+      user.passwordHash,
+    );
 
     if (!validPassword) {
       return NextResponse.json(
@@ -84,13 +94,7 @@ export async function POST(req: NextRequest) {
       message: "Password updated. Please sign in again.",
     });
 
-    response.cookies.set("refresh_token", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 0,
-    });
+    clearRefreshTokenCookie(response, req);
 
     return response;
   } catch (error) {

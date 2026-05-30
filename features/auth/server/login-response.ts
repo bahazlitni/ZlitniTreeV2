@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import { signAccessToken, signRefreshToken } from "@/lib/api/auth/jwt";
 import { sha256 } from "@/lib/api/auth/token";
 import { prisma } from "@/lib/prisma";
 import { getSessionByUserId } from "@/features/auth/server/session";
 import { PowerType } from "@/lib/generated/prisma/enums";
+import { setRefreshTokenCookie } from "@/lib/api/auth/cookies";
 
 type LoginUser = {
   id: string;
@@ -15,6 +17,7 @@ type LoginUser = {
 export async function createLoginResponse(
   user: LoginUser,
   options: {
+    req?: NextRequest;
     body?: Record<string, unknown>;
     clearLoginOtpChallenge?: boolean;
   } = {},
@@ -74,13 +77,7 @@ export async function createLoginResponse(
     user: session,
   });
 
-  response.cookies.set("refresh_token", refreshToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 30,
-  });
+  setRefreshTokenCookie(response, refreshToken, options.req);
 
   return response;
 }

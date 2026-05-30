@@ -24,13 +24,15 @@ import { createLoginResponse } from "@/features/auth/server/login-response";
 import { Theme, Locale } from "@/lib/global-types";
 import { formatMessage, getMessages } from "@/lib/i18n/messages";
 import { LoginMode } from "@/lib/generated/prisma/enums";
+import { shouldUseSecureAuthCookies } from "@/lib/api/auth/cookies";
 
 export const runtime = "nodejs";
 
 const MAX_ACTIVE_LOGIN_CHALLENGES_PER_USER = 5;
 
 function getCooldownPayload(createdAt: Date, now: Date) {
-  const resendAvailableAtMs = new Date(createdAt).getTime() + OTP_RULES.LOGIN.resendCooldownMs;
+  const resendAvailableAtMs =
+    new Date(createdAt).getTime() + OTP_RULES.LOGIN.resendCooldownMs;
   const cooldownRemainingMs = Math.max(0, resendAvailableAtMs - now.getTime());
 
   return {
@@ -41,12 +43,13 @@ function getCooldownPayload(createdAt: Date, now: Date) {
 
 function setLoginChallengeCookie(
   response: NextResponse,
+  req: NextRequest,
   value: string,
   maxAgeSeconds = Math.ceil(OTP_RULES.LOGIN.ttlMs / 1000),
 ) {
   response.cookies.set(LOGIN_OTP_CHALLENGE_COOKIE, value, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: shouldUseSecureAuthCookies(req),
     sameSite: "lax",
     path: "/",
     maxAge: maxAgeSeconds,
@@ -62,10 +65,7 @@ async function pruneLoginChallenges(userId: string, now: Date) {
     where: {
       userId,
       type: "LOGIN",
-      OR: [
-        { consumedAt: { not: null } },
-        { expiresAt: { lt: now } },
-      ],
+      OR: [{ consumedAt: { not: null } }, { expiresAt: { lt: now } }],
     },
   });
 
@@ -88,7 +88,9 @@ async function pruneLoginChallenges(userId: string, now: Date) {
 }
 
 async function getCookieBoundLoginChallenge(req: NextRequest, userId: string) {
-  const parsed = parseOtpChallengeCookie(req.cookies.get(LOGIN_OTP_CHALLENGE_COOKIE)?.value);
+  const parsed = parseOtpChallengeCookie(
+    req.cookies.get(LOGIN_OTP_CHALLENGE_COOKIE)?.value,
+  );
 
   if (!parsed) {
     return null;
@@ -105,7 +107,12 @@ async function getCookieBoundLoginChallenge(req: NextRequest, userId: string) {
   });
 }
 
-async function sendLoginOtpEmail(email: string, code: string, theme: Theme, locale: Locale) {
+async function sendLoginOtpEmail(
+  email: string,
+  code: string,
+  theme: Theme,
+  locale: Locale,
+) {
   const transporter = createTransporter();
   const t = getMessages(locale).Email.loginOtp;
 
@@ -113,13 +120,17 @@ async function sendLoginOtpEmail(email: string, code: string, theme: Theme, loca
     to: email,
     subject: t.subject,
     text: formatMessage(t.text, { code }),
-    html: buildLoginOtpCodeHtml(code, OTP_RULES.LOGIN.ttlMs / 60000, theme, locale),
+    html: buildLoginOtpCodeHtml(
+      code,
+      OTP_RULES.LOGIN.ttlMs / 60000,
+      theme,
+      locale,
+    ),
   });
 }
 
 export async function POST(req: NextRequest) {
   try {
-
     const body = await req.json();
     const email = String(body.email ?? "")
       .trim()
@@ -136,7 +147,6 @@ export async function POST(req: NextRequest) {
     const theme = getTheme(body.theme);
     const locale = getLocale(body.locale);
 
-
     const user = await prisma.user.findUnique({
       where: { email },
       select: {
@@ -149,7 +159,10 @@ export async function POST(req: NextRequest) {
     });
 
     if (!user) {
-      return NextResponse.json({ ok: false, message: "Invalid credentials" }, { status: 401 });
+      return NextResponse.json(
+        { ok: false, message: "Invalid credentials" },
+        { status: 401 },
+      );
     }
 
     const requiresPassword = user.loginMode !== LoginMode.PASSWORDLESS;
@@ -169,18 +182,25 @@ export async function POST(req: NextRequest) {
       }
 
       if (!user.passwordHash) {
-        return NextResponse.json({ ok: false, message: "Invalid credentials" }, { status: 401 });
+        return NextResponse.json(
+          { ok: false, message: "Invalid credentials" },
+          { status: 401 },
+        );
       }
 
       const validPassword = await verifyPassword(password, user.passwordHash);
 
       if (!validPassword) {
-        return NextResponse.json({ ok: false, message: "Invalid credentials" }, { status: 401 });
+        return NextResponse.json(
+          { ok: false, message: "Invalid credentials" },
+          { status: 401 },
+        );
       }
     }
 
     if (!requiresOtp) {
       const response = await createLoginResponse(user, {
+        req,
         body: { requiresOtp: false },
         clearLoginOtpChallenge: true,
       });
@@ -197,7 +217,10 @@ export async function POST(req: NextRequest) {
     if (existingChallenge) {
       const activeExpiresAt =
         existingChallenge.expiresAt ??
-        new Date(new Date(existingChallenge.createdAt).getTime() + OTP_RULES.LOGIN.ttlMs);
+        new Date(
+          new Date(existingChallenge.createdAt).getTime() +
+            OTP_RULES.LOGIN.ttlMs,
+        );
       const cooldown = getCooldownPayload(existingChallenge.createdAt, now);
 
       if (activeExpiresAt > now && cooldown.cooldownSeconds > 0) {
@@ -235,7 +258,7 @@ export async function POST(req: NextRequest) {
       });
 
       if (cookieValue) {
-        setLoginChallengeCookie(response, cookieValue);
+        setLoginChallengeCookie(response, req, cookieValue);
       }
 
       return response;
@@ -266,12 +289,19 @@ export async function POST(req: NextRequest) {
       ...getCooldownPayload(now, now),
     });
 
-    setLoginChallengeCookie(response, encodeOtpChallengeCookie(challenge.id, secret));
+    setLoginChallengeCookie(
+      response,
+      req,
+      encodeOtpChallengeCookie(challenge.id, secret),
+    );
 
     return response;
   } catch (error) {
     console.error("LOGIN_ERROR:", error);
 
-    return NextResponse.json({ ok: false, message: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { ok: false, message: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { hashOtpCode } from "@/lib/api/auth/otp/hash";
-import { OTP_RULES, LOGIN_OTP_CHALLENGE_COOKIE } from "@/lib/api/auth/otp/config";
+import {
+  OTP_RULES,
+  LOGIN_OTP_CHALLENGE_COOKIE,
+} from "@/lib/api/auth/otp/config";
 import {
   hashOtpChallengeSecret,
   parseOtpChallengeCookie,
@@ -40,7 +43,10 @@ export async function POST(req: NextRequest) {
     });
 
     if (!user) {
-      return NextResponse.json({ ok: false, message: "Invalid OTP code." }, { status: 401 });
+      return NextResponse.json(
+        { ok: false, message: "Invalid OTP code." },
+        { status: 401 },
+      );
     }
 
     if (user.loginMode === LoginMode.PASSWORD_ONLY) {
@@ -75,7 +81,8 @@ export async function POST(req: NextRequest) {
     const rules = OTP_RULES.LOGIN;
     const now = new Date();
     const expiresAt =
-      challenge.expiresAt ?? new Date(new Date(challenge.createdAt).getTime() + rules.ttlMs);
+      challenge.expiresAt ??
+      new Date(new Date(challenge.createdAt).getTime() + rules.ttlMs);
 
     if (expiresAt < now) {
       await prisma.oTPChallenge.delete({
@@ -115,7 +122,10 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      return NextResponse.json({ ok: false, message: "Invalid OTP code." }, { status: 401 });
+      return NextResponse.json(
+        { ok: false, message: "Invalid OTP code." },
+        { status: 401 },
+      );
     }
 
     await prisma.oTPChallenge.update({
@@ -123,12 +133,15 @@ export async function POST(req: NextRequest) {
       data: { consumedAt: now },
     });
 
-    const response = await createLoginResponse(user);
+    const response = await createLoginResponse(user, { req });
     response.cookies.delete(LOGIN_OTP_CHALLENGE_COOKIE);
     return response;
   } catch (error) {
     console.error("LOGIN_OTP_ERROR:", error);
 
-    return NextResponse.json({ ok: false, message: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { ok: false, message: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

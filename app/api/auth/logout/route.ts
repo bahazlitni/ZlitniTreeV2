@@ -2,6 +2,7 @@
 
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { clearRefreshTokenCookie } from "@/lib/api/auth/cookies";
 import { sha256 } from "@/lib/api/auth/token";
 
 export async function POST(req: NextRequest) {
@@ -13,13 +14,7 @@ export async function POST(req: NextRequest) {
       message: "Logged out successfully",
     });
 
-    response.cookies.set("refresh_token", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 0,
-    });
+    clearRefreshTokenCookie(response, req);
 
     if (!refreshToken) {
       return response;
@@ -43,7 +38,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { ok: false, message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

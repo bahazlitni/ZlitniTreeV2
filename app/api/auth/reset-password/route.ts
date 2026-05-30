@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { clearRefreshTokenCookie } from "@/lib/api/auth/cookies";
 import { hashPassword } from "@/lib/api/auth/password";
 import { hashPasswordResetToken } from "@/lib/api/auth/password-reset-token";
 import { prisma } from "@/lib/prisma";
@@ -38,7 +39,11 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    if (!resetToken || resetToken.consumedAt || resetToken.expiresAt < new Date()) {
+    if (
+      !resetToken ||
+      resetToken.consumedAt ||
+      resetToken.expiresAt < new Date()
+    ) {
       return NextResponse.json(
         { ok: false, message: "Invalid or expired reset token." },
         { status: 401 },
@@ -71,13 +76,7 @@ export async function POST(req: NextRequest) {
       message: "Password has been reset.",
     });
 
-    response.cookies.set("refresh_token", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 0,
-    });
+    clearRefreshTokenCookie(response, req);
 
     return response;
   } catch (error) {

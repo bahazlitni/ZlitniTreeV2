@@ -7,12 +7,12 @@ import {
   signAccessToken,
   signRefreshToken,
 } from "@/lib/api/auth/jwt";
+import { setRefreshTokenCookie } from "@/lib/api/auth/cookies";
 import { sha256 } from "@/lib/api/auth/token";
 import { v4 as uuidv4 } from "uuid";
 
 export async function POST(req: NextRequest) {
   try {
-
     const refreshToken = req.cookies.get("refresh_token")?.value;
 
     if (!refreshToken) {
@@ -36,7 +36,6 @@ export async function POST(req: NextRequest) {
         { status: 401 },
       );
     }
-
 
     if (storedToken.tokenHash !== refreshTokenHash) {
       return NextResponse.json(
@@ -96,13 +95,7 @@ export async function POST(req: NextRequest) {
       accessToken: newAccessToken,
     });
 
-    response.cookies.set("refresh_token", newRefreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 30,
-    });
+    setRefreshTokenCookie(response, newRefreshToken, req);
 
     return response;
   } catch (error) {
